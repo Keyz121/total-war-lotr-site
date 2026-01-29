@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Total War LotR — fan-made Lord of the Rings strategy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Total War LotR is an unofficial fan-made strategy inspired by The Lord of the Rings and the Total War series. A grand map of Middle-earth, massive battles and iconic factions.">
+    <style>
+        /* Те же стили, что и в русской версии, полностью скопированы */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #222 0, #050509 45%);
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+        a { color: #61dafb; text-decoration: none; cursor: pointer; }
+        a:hover { text-decoration: underline; }
+
+        header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+        .logo span {
+            display: block;
+            font-weight: 400;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            opacity: 0.7;
+        }
+        .nav {
+            display: flex;
+            gap: 18px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            align-items: center;
+        }
+        .lang-switch {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .lang-switch:hover {
+            background: rgba(255,255,255,0.06);
+            text-decoration: none;
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: 40px auto 60px;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+            gap: 40px;
+            align-items: center;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 20px;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: #cccccc;
+            margin-bottom: 25px;
+        }
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .badge {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .btn-primary, .btn-secondary, .btn-ghost {
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 10px 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            color: white;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #f5f5f5;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.04); }
+        .btn-ghost {
+            background: transparent;
+            border: 1px dashed rgba(255,255,255,0.25);
+            color: #bbbbbb;
+        }
+        .btn-ghost:hover {
+            border-style: solid;
+            background: rgba(255,255,255,0.03);
+        }
+        .btn-small {
+            font-size: 0.75rem;
+            padding: 6px 12px;
+        }
+        .cta-note {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+        }
+
+        .hero-art {
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            min-height: 220px;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.06) 0, rgba(0,0,0,0.6) 50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9rem;
+            color: #dddddd;
+        }
+        .hero-art-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.8rem;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 30px;
+        }
+        section {
+            margin-bottom: 50px;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        .columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px;
+            background: rgba(0,0,0,0.25);
+        }
+        .card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .tagline {
+            font-size: 0.9rem;
+            color: #cccccc;
+            margin-bottom: 8px;
+        }
+        .roadmap-item {
+            margin-bottom: 10px;
+        }
+        .roadmap-stage {
+            font-weight: 600;
+        }
+        .roadmap-status {
+            font-size: 0.8rem;
+            color: #ff9f43;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .faq-item {
+            margin-bottom: 12px;
+        }
+        .faq-q {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .subscribe-form {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .subscribe-form label {
+            font-size: 0.85rem;
+            color: #cccccc;
+        }
+        .subscribe-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .subscribe-form input[type="email"] {
+            flex: 1;
+            min-width: 180px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(0,0,0,0.4);
+            color: #f5f5f5;
+            font-size: 0.85rem;
+        }
+        .subscribe-form input[type="email"]::placeholder {
+            color: #888888;
+        }
+        .subscribe-hint {
+            font-size: 0.75rem;
+            color: #999999;
+        }
+
+        .news-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-date {
+            font-size: 0.78rem;
+            color: #bbbbbb;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .news-title {
+            font-weight: 600;
+            margin: 3px 0;
+        }
+        .news-text {
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .media-item {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3);
+        }
+        .media-item img {
+            display: block;
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .media-item figcaption {
+            padding: 8px 10px 10px;
+            font-size: 0.85rem;
+            color: #dddddd;
+        }
+        .media-hint {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+            margin-top: 8px;
+        }
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 30px 30px;
+            font-size: 0.75rem;
+            color: #aaaaaa;
+        }
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            .subscribe-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        TOTAL WAR LOTR
+        <span>UNOFFICIAL FAN PROJECT</span>
+    </div>
+    <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#news">News</a>
+        <a href="#media">Media</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a href="index.html" class="lang-switch">RU</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div>
+        <h1 class="hero-title">Total War LotR — grand strategy set in Middle-earth</h1>
+        <p class="hero-subtitle">
+            A fan-made project in the spirit of the Total War series set in The Lord of the Rings universe.
+            Command iconic factions, conquer strongholds and rewrite the outcome of the War of the Ring.
+        </p>
+
+        <div class="hero-badges">
+            <span class="badge">PC</span>
+            <span class="badge">Fan project</span>
+            <span class="badge">Middle-earth campaign map</span>
+            <span class="badge">In development</span>
+        </div>
+
+        <div class="cta-row">
+            <button class="btn-primary" data-scroll="#contact">Follow development</button>
+            <button class="btn-secondary" data-scroll="#roadmap">View roadmap</button>
+        </div>
+        <div class="cta-note">
+            The launcher and Discord server are not online yet. 
+            Leave your e‑mail below or contact us — we’ll notify you about tests and release.
+        </div>
+    </div>
+
+    <div class="hero-art">
+        <div class="hero-art-title">ART / SCREENSHOTS COMING SOON</div>
+        <div>
+            A key image will be placed here later: campaign map of Middle-earth, a battle scene or the project logo.<br><br>
+            To replace this block with an image, put a file into the <code>img/</code> folder and
+            change this markup to &lt;img src="img/hero.jpg" alt="..."&gt;.
+        </div>
+    </div>
+</section>
+
+<main>
+    <section id="about">
+        <h2>About the game</h2>
+        <div class="columns">
+            <div class="card">
+                <h3>Overview</h3>
+                <p class="tagline">
+                    Real-time battles combined with a grand campaign map of Middle-earth and massive armies.
+                </p>
+                <p>
+                    You take control of one of the factions of Middle-earth and lead it through the War of the Ring.
+                    On the campaign map you manage economy, cities and armies, while in tactical battles
+                    you command thousands of units and legendary heroes in real time.
+                </p>
+            </div>
+            <div class="card">
+                <h3>Key features</h3>
+                <ul>
+                    <li>Grand campaign map of Middle-earth with key regions: Gondor, Mordor, Rohan and more.</li>
+                    <li>Large-scale tactical battles in real time inspired by the Total War series.</li>
+                    <li>Unique factions with their own economy, roster, playstyle and goals.</li>
+                    <li>Heroes and commanders inspired by characters from The Lord of the Rings.</li>
+                    <li>Story campaign following the War of the Ring and alternative "what if" scenarios.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Who is this game for</h3>
+                <p>
+                    The project targets players who enjoy deep strategy with tactical battles,
+                    fans of the Total War series and The Lord of the Rings.
+                    If you ever wanted to lead Gondor against Mordor on your own campaign map,
+                    this project is made for you.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="news">
+        <h2>Development news</h2>
+        <div class="card">
+            <div class="news-item">
+                <div class="news-date">JAN 2025</div>
+                <div class="news-title">Official website launched</div>
+                <div class="news-text">
+                    The first version of the Total War LotR landing page is now online. 
+                    Here you’ll find development news, plans for tests and links to the launcher and Discord once they’re ready.
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-date">PLANS</div>
+                <div class="news-title">Defining the initial faction roster</div>
+                <div class="news-text">
+                    Work is in progress on selecting the key factions of Middle-earth for the first campaign version:
+                    Gondor, Rohan, Mordor, Isengard and others.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="media">
+        <h2>Media</h2>
+        <div class="media-grid">
+            <figure class="media-item">
+                <img src="img/placeholder-map.jpg" alt="Early campaign map concept">
+                <figcaption>Early concept of the Middle-earth campaign map with approximate regions.</figcaption>
+            </figure>
+            <figure class="media-item">
+                <img src="img/placeholder-battle.jpg" alt="Battle concept art">
+                <figcaption>Concept of large-scale battles with thousands of units on the field.</figcaption>
+            </figure>
+            <figure class="media-item">
+                <img src="img/placeholder-logo.jpg" alt="Total War LotR project logo">
+                <figcaption>A draft logo for the Total War LotR project (to be replaced with a final version).</figcaption>
+            </figure>
+        </div>
+        <p class="media-hint">
+            To make this media section work, create an <code>img</code> folder in your repository 
+            and add your images there named <code>placeholder-map.jpg</code>, <code>placeholder-battle.jpg</code>, 
+            <code>placeholder-logo.jpg</code>, or change the paths in the code to your own files.
+        </p>
+    </section>
+
+    <section id="roadmap">
+        <h2>Development roadmap</h2>
+        <div class="card">
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Concept and basic design document</div>
+                <div class="roadmap-status">Stage: In progress</div>
+                <p>
+                    Shaping the project vision, faction list, core mechanics for the campaign and tactical battles.
+                </p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Playable prototype</div>
+                <div class="roadmap-status">Stage: Planned</div>
+                <p>
+                    Rough campaign map, several factions and basic battles. Goal: test gameplay and balance.
+                    More precise dates will be announced once the concept is complete.
+                </p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Closed testing</div>
+                <div class="roadmap-status">Stage: Planned</div>
+                <p>
+                    Selecting testers, gathering feedback, balance adjustments, optimization and content improvements.
+                </p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Public release / open access</div>
+                <div class="roadmap-status">Stage: Planned</div>
+                <p>
+                    Publishing builds, launching the launcher and official channels (Discord etc.), further updates.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>FAQ</h2>
+        <div class="card">
+            <div class="faq-item">
+                <div class="faq-q">When will Total War LotR be released?</div>
+                <div>
+                    The project is in an early stage. We’re focusing on the concept and a first prototype.
+                    More precise dates will appear here as development progresses.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Which platforms will the game be available on?</div>
+                <div>
+                    The initial target is <strong>PC</strong>.
+                    Additional platforms and formats (standalone game or mod) will be announced later.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Is this an official Lord of the Rings or Total War game?</div>
+                <div>
+                    No. Total War LotR is an <strong>unofficial fan project</strong>, 
+                    not affiliated with or endorsed by SEGA, Creative Assembly, Middle-earth Enterprises
+                    or the owners of The Lord of the Rings IP. All names and universe elements are used as inspiration only.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">How can I join testing?</div>
+                <div>
+                    A signup form and a Discord link will appear here later.
+                    For now you can email us via the "Contact" section and mention that you’d like to be a tester.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <div class="columns">
+            <div class="card">
+                <h3>For players</h3>
+                <p>Want to follow development or take part in testing?</p>
+                <ul>
+                    <li>E‑mail: <a href="mailto:zarkovn067@gmail.com">zarkovn067@gmail.com</a></li>
+                    <li>
+                        <button class="btn-ghost btn-small" type="button"
+                                onclick="alert('Discord server is not created yet. Follow the news on the site.')">
+                            Discord (coming soon)
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn-ghost btn-small" type="button"
+                                onclick="alert('The launcher is under development. Once downloads are ready, the link will be here.')">
+                            Launcher (in development)
+                        </button>
+                    </li>
+                </ul>
+
+                <form class="subscribe-form"
+                      action="mailto:zarkovn067@gmail.com"
+                      method="post"
+                      enctype="text/plain">
+                    <label for="email">
+                        Leave your e‑mail to receive news about tests and release:
+                    </label>
+                    <div class="subscribe-row">
+                        <input id="email" name="email" type="email"
+                               placeholder="you@example.com" required>
+                        <button class="btn-primary" type="submit">Send</button>
+                    </div>
+                    <div class="subscribe-hint">
+                        Your email client will open with a pre-filled message to us.
+                        Just press “Send”.
+                    </div>
+                </form>
+
+                <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
+                    This is our main contact e‑mail for the project.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>For collaboration</h3>
+                <p>For development help, art, sound, localization and other collaboration topics:</p>
+                <ul>
+                    <li>Contact e‑mail: <a href="mailto:zarkovn067@gmail.com">zarkovn067@gmail.com</a></li>
+                    <li>Project documentation (GDD / pitch): <span>available on request</span></li>
+                </ul>
+                <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
+                    Use this address for all collaboration inquiries as well.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div>
+            © 2025 Total War LotR — fan-made project. All rights to The Lord of the Rings universe belong to their respective owners.
+        </div>
+        <div class="footer-links">
+            <button class="btn-ghost btn-small" type="button"
+                    onclick="alert('Discord server is not created yet. Once it’s online, the link will appear here.')">
+                Discord (coming soon)
+            </button>
+            <button class="btn-ghost btn-small" type="button"
+                    onclick="alert('The launcher is under development. Follow the news on the site.')">
+                Launcher (in development)
+            </button>
+        </div>
+    </div>
+    <div style="max-width:1100px;margin:10px auto 0;padding:0 30px;">
+        <p style="margin-top:6px;">
+            “Total War” is a registered trademark of SEGA / Creative Assembly.
+            This site and project are not affiliated with or endorsed by SEGA, Creative Assembly or the owners of The Lord of the Rings IP.
+        </p>
+    </div>
+</footer>
+
+<script>
+    function smoothScrollTo(targetId) {
+        var target = document.querySelector(targetId);
+        if (!target) return;
+        window.scrollTo({
+            top: target.offsetTop - 20,
+            behavior: 'smooth'
+        });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                smoothScrollTo(href);
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-scroll]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var targetId = this.getAttribute('data-scroll');
+            if (targetId) {
+                smoothScrollTo(targetId);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
