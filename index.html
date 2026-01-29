@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Total War LotR — фанатская стратегия по мотивам Властелина Колец</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Total War LotR — неофициальная фанатская стратегия по мотивам «Властелина Колец» в духе серии Total War. Глобальная карта Средиземья, масштабные сражения и легендарные фракции.">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #222 0, #050509 45%);
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+        a { color: #61dafb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+        .logo span {
+            display: block;
+            font-weight: 400;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            opacity: 0.7;
+        }
+        .nav {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: 40px auto 60px;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+            gap: 40px;
+            align-items: center;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 20px;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: #cccccc;
+            margin-bottom: 25px;
+        }
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .badge {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .btn-primary, .btn-secondary {
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 10px 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            color: white;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #f5f5f5;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.04); }
+        .cta-note {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+        }
+
+        .hero-art {
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            min-height: 220px;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.06) 0, rgba(0,0,0,0.6) 50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9rem;
+            color: #dddddd;
+        }
+        .hero-art-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.8rem;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 30px;
+        }
+        section {
+            margin-bottom: 50px;
+        }
+        h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        .columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px;
+            background: rgba(0,0,0,0.25);
+        }
+        .card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .tagline {
+            font-size: 0.9rem;
+            color: #cccccc;
+            margin-bottom: 8px;
+        }
+        .roadmap-item {
+            margin-bottom: 10px;
+        }
+        .roadmap-stage {
+            font-weight: 600;
+        }
+        .roadmap-status {
+            font-size: 0.8rem;
+            color: #ff9f43;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .faq-item {
+            margin-bottom: 12px;
+        }
+        .faq-q {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 30px 30px;
+            font-size: 0.75rem;
+            color: #aaaaaa;
+        }
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 15px;
+        }
+        .soon {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        TOTAL WAR LOTR
+        <span>НЕОФИЦИАЛЬНЫЙ ФАНАТСКИЙ ПРОЕКТ</span>
+    </div>
+    <nav class="nav">
+        <a href="#about">Об игре</a>
+        <a href="#roadmap">Дорожная карта</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Контакты</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div>
+        <h1 class="hero-title">Total War LotR — глобальная стратегия по мотивам Средиземья</h1>
+        <p class="hero-subtitle">
+            Фанатский проект в духе серии Total War во вселенной «Властелина Колец». 
+            Захватывайте крепости, ведите армии знаковых фракций и перепишите исход Великой войны за Кольцо.
+        </p>
+
+        <div class="hero-badges">
+            <span class="badge">PC</span>
+            <span class="badge">Фанатский проект</span>
+            <span class="badge">Глобальная карта Средиземья</span>
+            <span class="badge">Разработка ведётся</span>
+        </div>
+
+        <div class="cta-row">
+            <a href="#contact" class="btn-primary">Следить за разработкой</a>
+            <a href="#roadmap" class="btn-secondary">Посмотреть план разработки</a>
+        </div>
+        <div class="cta-note">
+            Лаунчер и Discord-сервер ещё не запущены. Оставьте контакт — сообщим о первых тестах и релизе.
+        </div>
+    </div>
+
+    <div class="hero-art">
+        <div class="hero-art-title">АРТ / СКРИНШОТЫ СКОРО</div>
+        <div>
+            Здесь позже появится ключевое изображение: карта Средиземья, битва или логотип проекта.<br><br>
+            Пока можно разместить временный арт или логотип «Total War LotR».
+        </div>
+    </div>
+</section>
+
+<main>
+    <section id="about">
+        <h2>Об игре</h2>
+        <div class="columns">
+            <div class="card">
+                <h3>Коротко о Total War LotR</h3>
+                <p class="tagline">
+                    Стратегия в реальном времени с глобальной картой Средиземья и масштабными сражениями тысяч войск.
+                </p>
+                <p>
+                    Игрок берет под контроль одну из фракций Средиземья и проводит её через Войну за Кольцо.
+                    На глобальной карте вы управляете экономикой, городами и армиями, а на тактической —
+                    ведёте масштабные битвы с участием легендарных юнитов и героев.
+                </p>
+            </div>
+            <div class="card">
+                <h3>Ключевые особенности</h3>
+                <ul>
+                    <li>Глобальная карта Средиземья с ключевыми регионами: Гондор, Мордор, Рохан и другие.</li>
+                    <li>Масштабные тактические битвы в реальном времени в духе серии Total War.</li>
+                    <li>Уникальные фракции со своей экономикой, юнитами, стилем игры и целями.</li>
+                    <li>Герои и командиры, вдохновлённые персонажами вселенной «Властелина Колец».</li>
+                    <li>Сюжетная кампания по мотивам Войны за Кольцо и альтернативные сценарии «что если».</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Для кого эта игра</h3>
+                <p>
+                    Проект ориентирован на игроков, которым нравятся глубокие стратегии с тактическими битвами,
+                    любителей серии Total War и фанатов вселенной «Властелина Колец».
+                    Если вы мечтали провести армию Гондора против Мордора на своей карте —
+                    этот проект делается именно для вас.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap">
+        <h2>Дорожная карта разработки</h2>
+        <div class="card">
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Концепт и базовый дизайн-документ</div>
+                <div class="roadmap-status">Этап: в процессе</div>
+                <p>
+                    Формирование видения проекта, список фракций, базовые механики кампании и тактических сражений.
+                </p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Играбельный прототип</div>
+                <div class="roadmap-status">Этап: запланировано</div>
+                <p>
+                    Черновая карта, несколько фракций и базовые битвы. Цель — проверить геймплей и баланс.
+                    Ориентировочные сроки можно будет назвать после завершения концепта.
+                </p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Закрытое тестирование</div>
+                <div class="roadmap-status">Этап: запланировано</div>
+                <p>
+                    Подбор тестеров, сбор обратной связи, правки баланса, оптимизация и доработка контента.
+                </p>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-stage">Публичный релиз / открытый доступ</div>
+                <div class="roadmap-status">Этап: запланировано</div>
+                <p>
+                    Публикация сборок, запуск лаунчера и официальных каналов (Discord и др.), дальнейшие обновления.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>FAQ</h2>
+        <div class="card">
+            <div class="faq-item">
+                <div class="faq-q">Когда выйдет Total War LotR?</div>
+                <div>
+                    Проект находится на ранней стадии. Сейчас мы фокусируемся на концепте и прототипе.
+                    По мере продвижения разработки здесь появятся более точные сроки и новости.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">На каких платформах будет доступна игра?</div>
+                <div>
+                    В первую очередь ориентир — <strong>PC</strong>.
+                    Дополнительные платформы и форматы (отдельная игра или мод) будут объявлены позже.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Это официальная игра по «Властелину Колец» или Total War?</div>
+                <div>
+                    Нет. Total War LotR — <strong>неофициальный фанатский проект</strong>, 
+                    не связанный и не одобренный SEGA, Creative Assembly, Middle-earth Enterprises 
+                    или владельцами прав на «Властелина Колец». Все названия и вселенная используются 
+                    исключительно как вдохновение.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">Как попасть в тестирование?</div>
+                <div>
+                    Позже здесь появится форма заявки и ссылка на Discord. 
+                    Пока вы можете написать нам по почте в разделе «Контакты» и указать,
+                    что хотите поучаствовать в тестах.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Контакты</h2>
+        <div class="columns">
+            <div class="card">
+                <h3>Для игроков</h3>
+                <p>Хотите следить за разработкой или поучаствовать в тестировании?</p>
+                <ul>
+                    <li>Почта: <a href="mailto:your_email@example.com">your_email@example.com</a></li>
+                    <li>Discord: <span class="soon">скоро</span></li>
+                    <li>Лаунчер: <span class="soon">в разработке</span></li>
+                </ul>
+                <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
+                    Замените <code>your_email@example.com</code> на свою актуальную почту.
+                </p>
+            </div>
+            <div class="card">
+                <h3>Для сотрудничества</h3>
+                <p>По вопросам помощи в разработке, артe, звуке, локализации и т.п.:</p>
+                <ul>
+                    <li>Почта для связи: <a href="mailto:biz@example.com">biz@example.com</a></li>
+                    <li>Документ по проекту (GDD / презентация): <span class="soon">по запросу</span></li>
+                </ul>
+                <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
+                    Также замените <code>biz@example.com</code> на свою рабочую почту.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div>
+            © 202X Total War LotR — фанатский проект. Все права на вселенную «Властелина Колец» принадлежат их законным правообладателям.
+        </div>
+        <div class="footer-links">
+            <span class="soon">Discord (скоро)</span>
+            <span class="soon">Лаунчер (в разработке)</span>
+        </div>
+    </div>
+    <div style="max-width:1100px;margin:10px auto 0;padding:0 30px;">
+        <p style="margin-top:6px;">
+            «Total War» является зарегистрированным товарным знаком SEGA / Creative Assembly.
+            Данный сайт и проект не аффилированы и не одобрены SEGA, Creative Assembly или владельцами прав на «Властелина Колец».
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
