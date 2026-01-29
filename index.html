@@ -39,9 +39,22 @@
         }
         .nav {
             display: flex;
-            gap: 20px;
+            gap: 18px;
             font-size: 0.9rem;
             text-transform: uppercase;
+            align-items: center;
+        }
+        .lang-switch {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .lang-switch:hover {
+            background: rgba(255,255,255,0.06);
+            text-decoration: none;
         }
 
         .hero {
@@ -231,6 +244,58 @@
             color: #999999;
         }
 
+        /* Новости */
+        .news-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-date {
+            font-size: 0.78rem;
+            color: #bbbbbb;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .news-title {
+            font-weight: 600;
+            margin: 3px 0;
+        }
+        .news-text {
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+
+        /* Медиа */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .media-item {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3);
+        }
+        .media-item img {
+            display: block;
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .media-item figcaption {
+            padding: 8px 10px 10px;
+            font-size: 0.85rem;
+            color: #dddddd;
+        }
+        .media-hint {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+            margin-top: 8px;
+        }
+
         footer {
             border-top: 1px solid rgba(255,255,255,0.1);
             padding: 20px 30px 30px;
@@ -276,9 +341,12 @@
     </div>
     <nav class="nav">
         <a href="#about">Об игре</a>
+        <a href="#news">Новости</a>
+        <a href="#media">Медиа</a>
         <a href="#roadmap">Дорожная карта</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Контакты</a>
+        <a href="index-en.html" class="lang-switch">EN</a>
     </nav>
 </header>
 
@@ -298,14 +366,12 @@
         </div>
 
         <div class="cta-row">
-            <!-- Кнопка: плавный скролл к разделу контактов / формы -->
             <button class="btn-primary" data-scroll="#contact">Следить за разработкой</button>
-            <!-- Кнопка: скролл к дорожной карте -->
             <button class="btn-secondary" data-scroll="#roadmap">План разработки</button>
         </div>
         <div class="cta-note">
-            Лаунчер и Discord-сервер ещё не запущены. 
-            Оставьте e-mail ниже в форме или напишите нам — сообщим о первых тестах и релизе.
+            Лаунчер ещё не запущен. Мы также готовим официальные сообщества во ВКонтакте и Telegram. 
+            Оставьте e‑mail ниже или подпишитесь на соцсети — сообщим о тестах и релизе.
         </div>
     </div>
 
@@ -313,7 +379,8 @@
         <div class="hero-art-title">АРТ / СКРИНШОТЫ СКОРО</div>
         <div>
             Здесь позже появится ключевое изображение: карта Средиземья, битва или логотип проекта.<br><br>
-            Пока можно разместить временный арт или логотип «Total War LotR».
+            Чтобы заменить это поле на картинку, положите файл в папку <code>img/</code> и 
+            измените разметку здесь на &lt;img src="img/hero.jpg" alt="..."&gt;.
         </div>
     </div>
 </section>
@@ -355,6 +422,51 @@
         </div>
     </section>
 
+    <section id="news">
+        <h2>Новости разработки</h2>
+        <div class="card">
+            <div class="news-item">
+                <div class="news-date">ЯНВ 2025</div>
+                <div class="news-title">Запущен официальный сайт проекта</div>
+                <div class="news-text">
+                    Опубликована первая версия лендинга Total War LotR. Здесь будут появляться новости разработки,
+                    планы по тестам и ссылки на лаунчер, а также официальные сообщества во ВКонтакте и Telegram.
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-date">ПЛАНЫ</div>
+                <div class="news-title">Определение стартового списка фракций</div>
+                <div class="news-text">
+                    Сейчас идёт работа над выбором ключевых фракций Средиземья для первой версии кампании:
+                    Гондор, Рохан, Мордор, Изенгард и другие.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="media">
+        <h2>Медиа</h2>
+        <div class="media-grid">
+            <figure class="media-item">
+                <img src="img/placeholder-map.jpg" alt="Черновой вид карты Средиземья">
+                <figcaption>Черновой концепт карты кампании Средиземья (примерное расположение регионов).</figcaption>
+            </figure>
+            <figure class="media-item">
+                <img src="img/placeholder-battle.jpg" alt="Концепт масштабной битвы">
+                <figcaption>Идея масштабных сражений с участием тысяч юнитов на поле боя.</figcaption>
+            </figure>
+            <figure class="media-item">
+                <img src="img/placeholder-logo.jpg" alt="Логотип проекта Total War LotR">
+                <figcaption>Вариант логотипа проекта Total War LotR (можно заменить на финальный).</figcaption>
+            </figure>
+        </div>
+        <p class="media-hint">
+            Чтобы медиа-блок заработал, создай в репозитории папку <code>img</code> и добавь туда свои изображения,
+            назвав их <code>placeholder-map.jpg</code>, <code>placeholder-battle.jpg</code>, <code>placeholder-logo.jpg</code>
+            или измени пути в коде под свои файлы.
+        </p>
+    </section>
+
     <section id="roadmap">
         <h2>Дорожная карта разработки</h2>
         <div class="card">
@@ -384,7 +496,7 @@
                 <div class="roadmap-stage">Публичный релиз / открытый доступ</div>
                 <div class="roadmap-status">Этап: запланировано</div>
                 <p>
-                    Публикация сборок, запуск лаунчера и официальных каналов (Discord и др.), дальнейшие обновления.
+                    Публикация сборок, запуск лаунчера и официальных сообществ (VK, Telegram), дальнейшие обновления.
                 </p>
             </div>
         </div>
@@ -419,7 +531,7 @@
             <div class="faq-item">
                 <div class="faq-q">Как попасть в тестирование?</div>
                 <div>
-                    Позже здесь появится форма заявки и ссылка на Discord. 
+                    Позже здесь появится форма заявки и ссылки на официальные сообщества во ВКонтакте и Telegram. 
                     Пока вы можете написать нам по почте в разделе «Контакты» и указать,
                     что хотите поучаствовать в тестах.
                 </div>
@@ -434,13 +546,9 @@
                 <h3>Для игроков</h3>
                 <p>Хотите следить за разработкой или поучаствовать в тестировании?</p>
                 <ul>
-                    <li>Почта: <a href="mailto:your_email@example.com">your_email@example.com</a></li>
-                    <li>
-                        <button class="btn-ghost btn-small" type="button"
-                                onclick="alert('Discord-сервер ещё не создан. Следите за новостями на сайте.')">
-                            Discord (скоро)
-                        </button>
-                    </li>
+                    <li>Почта: <a href="mailto:zarkovn067@gmail.com">zarkovn067@gmail.com</a></li>
+                    <li>VK сообщество: <a href="https://vk.com/your_community" target="_blank">vk.com/your_community</a></li>
+                    <li>Telegram-канал: <a href="https://t.me/your_channel" target="_blank">t.me/your_channel</a></li>
                     <li>
                         <button class="btn-ghost btn-small" type="button"
                                 onclick="alert('Лаунчер пока в разработке. Как только появится загрузка, ссылка будет здесь.')">
@@ -449,9 +557,8 @@
                     </li>
                 </ul>
 
-                <!-- Простая форма: отправит письмо на вашу почту через почтовый клиент пользователя -->
                 <form class="subscribe-form"
-                      action="mailto:your_email@example.com"
+                      action="mailto:zarkovn067@gmail.com"
                       method="post"
                       enctype="text/plain">
                     <label for="email">
@@ -469,7 +576,7 @@
                 </form>
 
                 <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
-                    Замените <code>your_email@example.com</code> на свою актуальную почту (в ссылке и в форме).
+                    Это наш основной e‑mail для связи по игре.
                 </p>
             </div>
 
@@ -477,11 +584,11 @@
                 <h3>Для сотрудничества</h3>
                 <p>По вопросам помощи в разработке, артe, звуке, локализации и т.п.:</p>
                 <ul>
-                    <li>Почта для связи: <a href="mailto:biz@example.com">biz@example.com</a></li>
+                    <li>Почта для связи: <a href="mailto:zarkovn067@gmail.com">zarkovn067@gmail.com</a></li>
                     <li>Документ по проекту (GDD / презентация): <span>по запросу</span></li>
                 </ul>
                 <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
-                    Также замените <code>biz@example.com</code> на свою рабочую почту.
+                    Используйте этот адрес и для вопросов по сотрудничеству.
                 </p>
             </div>
         </div>
@@ -494,14 +601,12 @@
             © 2025 Total War LotR — фанатский проект. Все права на вселенную «Властелина Колец» принадлежат их законным правообладателям.
         </div>
         <div class="footer-links">
-            <button class="btn-ghost btn-small" type="button"
-                    onclick="alert('Discord-сервер ещё не создан. Как только запустим — ссылка будет здесь.')">
-                Discord (скоро)
-            </button>
-            <button class="btn-ghost btn-small" type="button"
-                    onclick="alert('Лаунчер пока в разработке. Следите за новостями на сайте.')">
-                Лаунчер (в разработке)
-            </button>
+            <a class="btn-ghost btn-small" href="https://vk.com/your_community" target="_blank">
+                VK
+            </a>
+            <a class="btn-ghost btn-small" href="https://t.me/your_channel" target="_blank">
+                Telegram
+            </a>
         </div>
     </div>
     <div style="max-width:1100px;margin:10px auto 0;padding:0 30px;">
