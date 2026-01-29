@@ -13,7 +13,7 @@
             color: #f5f5f5;
             line-height: 1.6;
         }
-        a { color: #61dafb; text-decoration: none; }
+        a { color: #61dafb; text-decoration: none; cursor: pointer; }
         a:hover { text-decoration: underline; }
 
         header {
@@ -84,7 +84,7 @@
             align-items: center;
             margin-bottom: 15px;
         }
-        .btn-primary, .btn-secondary {
+        .btn-primary, .btn-secondary, .btn-ghost {
             border-radius: 999px;
             border: none;
             cursor: pointer;
@@ -93,6 +93,7 @@
             text-transform: uppercase;
             letter-spacing: 0.06em;
             display: inline-block;
+            text-align: center;
         }
         .btn-primary {
             background: linear-gradient(135deg, #ff4b2b, #ff416c);
@@ -105,6 +106,19 @@
             color: #f5f5f5;
         }
         .btn-secondary:hover { background: rgba(255,255,255,0.04); }
+        .btn-ghost {
+            background: transparent;
+            border: 1px dashed rgba(255,255,255,0.25);
+            color: #bbbbbb;
+        }
+        .btn-ghost:hover {
+            border-style: solid;
+            background: rgba(255,255,255,0.03);
+        }
+        .btn-small {
+            font-size: 0.75rem;
+            padding: 6px 12px;
+        }
         .cta-note {
             font-size: 0.8rem;
             color: #aaaaaa;
@@ -183,6 +197,40 @@
             font-weight: 600;
             margin-bottom: 3px;
         }
+
+        .subscribe-form {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .subscribe-form label {
+            font-size: 0.85rem;
+            color: #cccccc;
+        }
+        .subscribe-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .subscribe-form input[type="email"] {
+            flex: 1;
+            min-width: 180px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(0,0,0,0.4);
+            color: #f5f5f5;
+            font-size: 0.85rem;
+        }
+        .subscribe-form input[type="email"]::placeholder {
+            color: #888888;
+        }
+        .subscribe-hint {
+            font-size: 0.75rem;
+            color: #999999;
+        }
+
         footer {
             border-top: 1px solid rgba(255,255,255,0.1);
             padding: 20px 30px 30px;
@@ -199,11 +247,8 @@
         }
         .footer-links {
             display: flex;
-            gap: 15px;
-        }
-        .soon {
-            opacity: 0.6;
-            cursor: default;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         @media (max-width: 800px) {
@@ -214,6 +259,10 @@
                 flex-direction: column;
                 gap: 10px;
                 align-items: flex-start;
+            }
+            .subscribe-row {
+                flex-direction: column;
+                align-items: stretch;
             }
         }
     </style>
@@ -249,11 +298,14 @@
         </div>
 
         <div class="cta-row">
-            <a href="#contact" class="btn-primary">Следить за разработкой</a>
-            <a href="#roadmap" class="btn-secondary">Посмотреть план разработки</a>
+            <!-- Кнопка: плавный скролл к разделу контактов / формы -->
+            <button class="btn-primary" data-scroll="#contact">Следить за разработкой</button>
+            <!-- Кнопка: скролл к дорожной карте -->
+            <button class="btn-secondary" data-scroll="#roadmap">План разработки</button>
         </div>
         <div class="cta-note">
-            Лаунчер и Discord-сервер ещё не запущены. Оставьте контакт — сообщим о первых тестах и релизе.
+            Лаунчер и Discord-сервер ещё не запущены. 
+            Оставьте e-mail ниже в форме или напишите нам — сообщим о первых тестах и релизе.
         </div>
     </div>
 
@@ -382,23 +434,54 @@
                 <h3>Для игроков</h3>
                 <p>Хотите следить за разработкой или поучаствовать в тестировании?</p>
                 <ul>
-                    <li>Почта: <a href="mailto:your_email@example.com">your_email@example.com</a></li>
-                    <li>Discord: <span class="soon">скоро</span></li>
-                    <li>Лаунчер: <span class="soon">в разработке</span></li>
+                    <li>Почта: <a href="mailto:zarkovn067@gmail.com">zarkovn067@gmail.com</a></li>
+                    <li>
+                        <button class="btn-ghost btn-small" type="button"
+                                onclick="alert('Discord-сервер ещё не создан. Следите за новостями на сайте.')">
+                            Discord (скоро)
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn-ghost btn-small" type="button"
+                                onclick="alert('Лаунчер пока в разработке. Как только появится загрузка, ссылка будет здесь.')">
+                            Лаунчер (в разработке)
+                        </button>
+                    </li>
                 </ul>
+
+                <!-- Простая форма: отправит письмо на вашу почту через почтовый клиент пользователя -->
+                <form class="subscribe-form"
+                      action="mailto:zarkovn067@gmail.com"
+                      method="post"
+                      enctype="text/plain">
+                    <label for="email">
+                        Оставьте e‑mail, чтобы получить новости о тестах и релизе:
+                    </label>
+                    <div class="subscribe-row">
+                        <input id="email" name="email" type="email"
+                               placeholder="you@example.com" required>
+                        <button class="btn-primary" type="submit">Отправить</button>
+                    </div>
+                    <div class="subscribe-hint">
+                        При нажатии откроется ваш почтовый клиент с готовым письмом на наш адрес.
+                        Просто нажмите «Отправить».
+                    </div>
+                </form>
+
                 <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
-                    Замените <code>your_email@example.com</code> на свою актуальную почту.
+                    Это наш основной e‑mail для связи по игре.
                 </p>
             </div>
+
             <div class="card">
                 <h3>Для сотрудничества</h3>
                 <p>По вопросам помощи в разработке, артe, звуке, локализации и т.п.:</p>
                 <ul>
-                    <li>Почта для связи: <a href="mailto:biz@example.com">biz@example.com</a></li>
-                    <li>Документ по проекту (GDD / презентация): <span class="soon">по запросу</span></li>
+                    <li>Почта для связи: <a href="mailto:zarkovn067@gmail.com">zarkovn067@gmail.com</a></li>
+                    <li>Документ по проекту (GDD / презентация): <span>по запросу</span></li>
                 </ul>
                 <p style="font-size:0.8rem;color:#bbbbbb;margin-top:8px;">
-                    Также замените <code>biz@example.com</code> на свою рабочую почту.
+                    Используйте этот адрес и для вопросов по сотрудничеству.
                 </p>
             </div>
         </div>
@@ -408,11 +491,17 @@
 <footer>
     <div class="footer-inner">
         <div>
-            © 202X Total War LotR — фанатский проект. Все права на вселенную «Властелина Колец» принадлежат их законным правообладателям.
+            © 2025 Total War LotR — фанатский проект. Все права на вселенную «Властелина Колец» принадлежат их законным правообладателям.
         </div>
         <div class="footer-links">
-            <span class="soon">Discord (скоро)</span>
-            <span class="soon">Лаунчер (в разработке)</span>
+            <button class="btn-ghost btn-small" type="button"
+                    onclick="alert('Discord-сервер ещё не создан. Как только запустим — ссылка будет здесь.')">
+                Discord (скоро)
+            </button>
+            <button class="btn-ghost btn-small" type="button"
+                    onclick="alert('Лаунчер пока в разработке. Следите за новостями на сайте.')">
+                Лаунчер (в разработке)
+            </button>
         </div>
     </div>
     <div style="max-width:1100px;margin:10px auto 0;padding:0 30px;">
@@ -422,6 +511,37 @@
         </p>
     </div>
 </footer>
+
+<script>
+    // Плавный скролл по якорям и по data-scroll
+    function smoothScrollTo(targetId) {
+        var target = document.querySelector(targetId);
+        if (!target) return;
+        window.scrollTo({
+            top: target.offsetTop - 20,
+            behavior: 'smooth'
+        });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                smoothScrollTo(href);
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-scroll]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var targetId = this.getAttribute('data-scroll');
+            if (targetId) {
+                smoothScrollTo(targetId);
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
