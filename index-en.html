@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Total War LotR is an unofficial fan-made strategy inspired by The Lord of the Rings and the Total War series. A grand map of Middle-earth, massive battles and iconic factions.">
     <style>
-        /* Те же стили, что и в русской версии, полностью скопированы */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -369,8 +368,8 @@
             <button class="btn-secondary" data-scroll="#roadmap">View roadmap</button>
         </div>
         <div class="cta-note">
-            The launcher and Discord server are not online yet. 
-            Leave your e‑mail below or contact us — we’ll notify you about tests and release.
+            The launcher is not online yet. We’re also preparing official communities on VK and Telegram. 
+            Leave your e‑mail below or follow us on social networks — we’ll notify you about tests and release.
         </div>
     </div>
 
@@ -429,7 +428,8 @@
                 <div class="news-title">Official website launched</div>
                 <div class="news-text">
                     The first version of the Total War LotR landing page is now online. 
-                    Here you’ll find development news, plans for tests and links to the launcher and Discord once they’re ready.
+                    Here you’ll find development news, plans for tests and links to the launcher,
+                    as well as official VK and Telegram communities once they’re ready.
                 </div>
             </div>
             <div class="news-item">
@@ -495,7 +495,7 @@
                 <div class="roadmap-stage">Public release / open access</div>
                 <div class="roadmap-status">Stage: Planned</div>
                 <p>
-                    Publishing builds, launching the launcher and official channels (Discord etc.), further updates.
+                    Publishing builds, launching the launcher and official communities (VK, Telegram), further updates.
                 </p>
             </div>
         </div>
@@ -529,7 +529,7 @@
             <div class="faq-item">
                 <div class="faq-q">How can I join testing?</div>
                 <div>
-                    A signup form and a Discord link will appear here later.
+                    A signup form and links to official VK and Telegram communities will appear here later.
                     For now you can email us via the "Contact" section and mention that you’d like to be a tester.
                 </div>
             </div>
@@ -544,12 +544,8 @@
                 <p>Want to follow development or take part in testing?</p>
                 <ul>
                     <li>E‑mail: <a href="mailto:zarkovn067@gmail.com">zarkovn067@gmail.com</a></li>
-                    <li>
-                        <button class="btn-ghost btn-small" type="button"
-                                onclick="alert('Discord server is not created yet. Follow the news on the site.')">
-                            Discord (coming soon)
-                        </button>
-                    </li>
+                    <li>VK community: <a href="https://vk.com/your_community" target="_blank">vk.com/your_community</a></li>
+                    <li>Telegram channel: <a href="https://t.me/your_channel" target="_blank">t.me/your_channel</a></li>
                     <li>
                         <button class="btn-ghost btn-small" type="button"
                                 onclick="alert('The launcher is under development. Once downloads are ready, the link will be here.')">
@@ -602,53 +598,4 @@
             © 2025 Total War LotR — fan-made project. All rights to The Lord of the Rings universe belong to their respective owners.
         </div>
         <div class="footer-links">
-            <button class="btn-ghost btn-small" type="button"
-                    onclick="alert('Discord server is not created yet. Once it’s online, the link will appear here.')">
-                Discord (coming soon)
-            </button>
-            <button class="btn-ghost btn-small" type="button"
-                    onclick="alert('The launcher is under development. Follow the news on the site.')">
-                Launcher (in development)
-            </button>
-        </div>
-    </div>
-    <div style="max-width:1100px;margin:10px auto 0;padding:0 30px;">
-        <p style="margin-top:6px;">
-            “Total War” is a registered trademark of SEGA / Creative Assembly.
-            This site and project are not affiliated with or endorsed by SEGA, Creative Assembly or the owners of The Lord of the Rings IP.
-        </p>
-    </div>
-</footer>
-
-<script>
-    function smoothScrollTo(targetId) {
-        var target = document.querySelector(targetId);
-        if (!target) return;
-        window.scrollTo({
-            top: target.offsetTop - 20,
-            behavior: 'smooth'
-        });
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-        link.addEventListener('click', function (e) {
-            var href = this.getAttribute('href');
-            if (href && href.startsWith('#')) {
-                e.preventDefault();
-                smoothScrollTo(href);
-            }
-        });
-    });
-
-    document.querySelectorAll('[data-scroll]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var targetId = this.getAttribute('data-scroll');
-            if (targetId) {
-                smoothScrollTo(targetId);
-            }
-        });
-    });
-</script>
-
-</body>
-</html>
+            <a class="btn-ghost btn-small" 
